@@ -15,9 +15,6 @@ COPY . .
 
 FROM alpine:3.16.7
 
-# Set the environment variable for the app
-ENV NODE_ENV=production
-
 WORKDIR /app
 
 RUN apk update && apk add npm
