@@ -2,53 +2,53 @@
 services:
 
   #Builds the frontend Docker image and creates the frontend microservice
-  yolo-client:
-    image: yolo-client:v1.0.0
+  yoloclient:
+    image: yoloclient:v1.0.0
     build: ./client
-    container_name: yolo-client
+    container_name: yoloclient
     stdin_open: true
     tty: true
     ports:
       - "3000:3000"
     depends_on: 
-      - yolo-backend
+      - yolobackend
     networks:
-      - app-net
+      - appnet
 
   #Builds the backend Docker image and creates the backend microservice
-  yolo-backend:
-    image: yolo-backend:v1.0.0
+  yolobackend:
+    image: yolobackend:v1.0.0
     build: ./backend
-    container_name: yolo-backend
+    container_name: yolobackend
     stdin_open: true
     tty: true
     restart: always
     ports:
       - "5000:5000"
     depends_on: 
-      - app-ip-mongo
+      - appipmongo
     networks:
-      - app-net
+      - appnet
+    environment:
+      MONGO_URL: mongodb://appipmongo:27018/yolomy
 
   #Creates the database microservice
-  app-ip-mongo:
-    image: mongo:7.0.4
-    container_name: app-mongo
+  appipmongo:
+    image: mongo:4.4.6
+    container_name: mongodb_data
     ports:
-      - "24018:24018"
+      - "27018:27018"
     networks:
-      - app-net
+      - appnet
     volumes:
-      - type: volume
-        source: app-mongo-data
-        target: /data/db
+      - appmongodata:/data/db
 
 #Creates the network infrastructure necessary for the containers to communicate with each other
 networks:
-  app-net:
+  appnet:
     driver: bridge
 
 #Creates a Docker volume that persists all the data stored in the database
 volumes:
-  app-mongo-data:
+  appmongodata:
     driver: local
