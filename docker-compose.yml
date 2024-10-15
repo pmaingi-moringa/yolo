@@ -18,7 +18,9 @@ services:
   #Builds the backend Docker image and creates the backend microservice
   yolobackend:
     image: yolobackend:v1.0.0
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: dockerfile
     container_name: yolobackend
     stdin_open: true
     tty: true
@@ -29,26 +31,23 @@ services:
       - appipmongo
     networks:
       - appnet
-    environment:
-      MONGO_URL: mongodb://appipmongo:27018/yolomy
 
   #Creates the database microservice
   appipmongo:
-    image: mongo:4.4.6
+    image: mongo:4.4.1    
     container_name: mongodb_data
     ports:
-      - "27018:27018"
+      - "27017:27017"
     networks:
       - appnet
     volumes:
       - appmongodata:/data/db
 
+#Creates a Docker volume that persists all the data stored in the database
+volumes:
+  appmongodata:
+
 #Creates the network infrastructure necessary for the containers to communicate with each other
 networks:
   appnet:
     driver: bridge
-
-#Creates a Docker volume that persists all the data stored in the database
-volumes:
-  appmongodata:
-    driver: local
