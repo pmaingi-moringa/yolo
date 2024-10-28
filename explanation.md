@@ -1,9 +1,9 @@
 ## 1. Choice of Base Image
- The base image used to build the containers is `node:16-alpine3.16`. It is derived from the Alpine Linux distribution, making it lightweight and compact. 
+ The base image used to build the containers is `node:14`. It is derived from the Alpine Linux distribution, making it lightweight and compact. 
  Used 
- 1. Client:`node:16-alpine3.16`
- 2. Backend: `node:16-alpine3.16`
- 3.Mongo : `mongo:6.0 `
+ 1. Client:`node:14`
+ 2. Backend: `node:14`
+ 3.Mongo : `mongo:4.4.1 `
        
 
 ## 2. Dockerfile directives used in the creation and running of each container.
@@ -34,7 +34,7 @@ RUN npm run build && \
     npm prune --production
 
 # Production stage
-FROM node:16-alpine3.16 as production-stage
+FROM node:14 as production-stage
 
 WORKDIR /client
 
@@ -61,7 +61,7 @@ CMD ["npm", "start"]
 
 ```
 # Set base image
-FROM node:16-alpine3.16
+FROM node:14
 
 # Set the working directory
 WORKDIR /backend
@@ -99,29 +99,29 @@ The (docker-compose.yml) defines the networking configuration for the project. I
 
 ```
 services:
-  backend:
+  yolobackend:
     # ...
     ports:
       - "5000:5000"
     networks:
-      - yolo-network
+      - appnet
 
-  client:
+  yoloclient:
     # ...
     ports:
       - "3000:3000"
     networks:
-      - yolo-network
+      - appnet
   
-  mongodb:
+  mongodb_data:
     # ...
     ports:
       - "27017:27017"
     networks:
-      - yolo-network
+      - appnet
 
 networks:
-  yolo-network:
+  appnet:
     driver: bridge
 ```
 In this configuration, the backend container is mapped to port 5000 of the host, the client container is mapped to port 3000 of the host, and mongodb container is mapped to port 27017 of the host. All containers are connected to the yolo-network bridge network.
@@ -145,7 +145,7 @@ This volume, mongodb_data, is designated for storing MongoDB data. It ensures th
 To achieve the task the following git workflow was used:
 
 1. Fork the repository from the original repository.
-2. Clone the repo: `git@github.com:Maubinyaachi/yolo-Microservice.git`
+2. Clone the repo: `git@github.com:pmaingi-moringa/yolo.git`
 3. Create a .gitignore file to exclude unnecessary     files and directories from version control.
 4. Added Dockerfile for the client to the repo:
 `git add client/Dockerfile`
