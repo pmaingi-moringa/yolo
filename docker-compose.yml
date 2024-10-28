@@ -28,26 +28,30 @@ services:
     ports:
       - "5000:5000"
     depends_on: 
-      - appipmongo
+      - mongodb_data
     networks:
       - appnet
 
   #Creates the database microservice
-  appipmongo:
+  mongodb_data:
     image: mongo:4.4.1    
     container_name: mongodb_data
+    hostname: mongodb_data
     ports:
       - "27017:27017"
     networks:
       - appnet
     volumes:
-      - appmongodata:/data/db
+      - appmongodata:/data/db/
 
 #Creates a Docker volume that persists all the data stored in the database
 volumes:
   appmongodata:
+    driver: local
+    name: mongo-data
 
 #Creates the network infrastructure necessary for the containers to communicate with each other
 networks:
   appnet:
     driver: bridge
+    name: mongo-net
