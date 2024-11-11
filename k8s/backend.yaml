@@ -20,9 +20,6 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 5000
-        env:
-        - name: MONGODB_URI
-          value: "mongodb://localhost/"
 ---
 apiVersion: v1
 kind: Service
