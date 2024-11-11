@@ -12,11 +12,11 @@ spec:
         app: yolofrontend
     spec:
       containers:
-      - name: yolofrontend
+      - name: yolofrontend-cont
         image: paulmaingi/yoloclient:v1.0.0
         resources:
           limits:
-            memory: "1024Mi"
+            memory: "512Mi"
             cpu: "500m"
         ports:
         - containerPort: 3000
