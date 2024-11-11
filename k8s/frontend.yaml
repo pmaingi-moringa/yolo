@@ -16,7 +16,7 @@ spec:
         image: paulmaingi/yoloclient:v1.0.0
         resources:
           limits:
-            memory: "512Mi"
+            memory: "2Gi"
             cpu: "500m"
         ports:
         - containerPort: 3000

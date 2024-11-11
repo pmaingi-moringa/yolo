@@ -16,7 +16,7 @@ spec:
         image: paulmaingi/yolobackend:v1.0.0
         resources:
           limits:
-            memory: "512Mi"
+            memory: "2Gi"
             cpu: "500m"
         ports:
         - containerPort: 5000
@@ -29,6 +29,7 @@ kind: Service
 metadata:
   name: yolobackend-serv
 spec:
+  type: LoadBalancer
   selector:
     app: yolobackend
   ports:
