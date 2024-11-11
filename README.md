@@ -19,8 +19,8 @@ Defines the client deployment by specifying:
 - **Containers**: Deploys the Docker Hub client image `paulmaingi/yoloclient:v1.0.0`, exposes container port 3000, and defines CPU and memory resources.
 
 ### 2. Backend Deployment (`backend-deployment.yaml`)
-Defines the backend deployment, including:
-- **Containers**: Deploys the backend container (e.g., `paulmaingi/yolobacked:v1.0.0`), with port 5000 exposed to interact with the frontend.
+Defines the backend deployment by specifying:
+- **Containers**: Deploys the Docker Hub backend image (e.g., `paulmaingi/yolobacked:v1.0.0`), with port 5000 exposed to interact with the frontend.
 - **ClusterIP**: Exposes the backend service internally for communication with the client application.
 - **Selector**: Targets the backend deployment.
 
